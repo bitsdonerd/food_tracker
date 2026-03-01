@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>System Design — Gerenciador de Marmitas</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-brand">🍱 MARMITA.APP</div>
+  <div class="tab active" onclick="switchTab('fluxo')">⚡ Fluxo</div>
+  <div class="tab" onclick="switchTab('patterns')">🧩 Patterns</div>
+  <div class="tab" onclick="switchTab('database')">🗄️ Database</div>
+  <div class="tab" onclick="switchTab('precos')">💰 Preços</div>
+  <div class="tab" onclick="switchTab('roadmap')">🗺️ Roadmap</div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-eyebrow">System Design · Clean Architecture · Refinado</div>
+  <h1>Gerenciador de <em>Marmitas</em><br>& Pratos Feitos</h1>
+  <p class="hero-desc">Arquitetura refinada com Factory + Builder + Observer Pattern, Pusher para real-time e Prisma ORM. Mobile-first, < 500ms de latência cozinha-garçom.</p>
+  <div class="hero-chips">
+    <span class="chip chip-amber">Next.js 14 App Router</span>
+    <span class="chip chip-blue">Pusher Channels</span>
+    <span class="chip chip-green">Prisma + PostgreSQL</span>
+    <span class="chip chip-purple">Factory Pattern</span>
+    <span class="chip chip-purple">Builder Pattern</span>
+    <span class="chip chip-red">Observer Pattern</span>
+    <span class="chip chip-amber">PWA Mobile-First</span>
+  </div>
+</div>
+
+<!-- ══ TAB: FLUXO ══ -->
+<div id="tab-fluxo" class="tab-content active">
+  <div class="section">
+    <div class="section-label">Fluxo de Dados</div>
+    <div class="section-title">Pedido → Cozinha em < 500ms</div>
+    <div class="section-sub">Clique em cada nó para ver responsabilidades e decisões técnicas</div>
+
+    <div class="flow-diagram" id="flow-diagram">
+      <!-- nodes inserted by JS -->
+    </div>
+    <div id="flow-detail"></div>
+  </div>
+
+  <div class="section">
+    <div class="section-label">Requisitos Não Funcionais</div>
+    <div class="section-title">Garantias do Sistema</div>
+    <div class="section-sub">Metas mensuráveis que guiam as decisões de arquitetura</div>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;">
+
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:1.25rem;">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:1.8rem;font-weight:700;color:var(--amber);line-height:1;">&lt; 500ms</div>
+        <div style="font-size:0.8rem;font-weight:600;margin:0.3rem 0 0.15rem;">Latência Garçom → Cozinha</div>
+        <div style="font-size:0.72rem;color:var(--muted);">Pusher entrega o evento antes da cozinha perceber</div>
+      </div>
+
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:1.25rem;">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:1.8rem;font-weight:700;color:var(--green);line-height:1;">200/dia</div>
+        <div style="font-size:0.8rem;font-weight:600;margin:0.3rem 0 0.15rem;">Pedidos no Pico</div>
+        <div style="font-size:0.72rem;color:var(--muted);">Serverless Functions escalam automaticamente</div>
+      </div>
+
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:1.25rem;">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:1.8rem;font-weight:700;color:var(--blue);line-height:1;">PWA</div>
+        <div style="font-size:0.8rem;font-weight:600;margin:0.3rem 0 0.15rem;">Offline Básico</div>
+        <div style="font-size:0.72rem;color:var(--muted);">Service Worker cacheia UI. Envio requer rede</div>
+      </div>
+
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:1.25rem;">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:1.8rem;font-weight:700;color:var(--purple);line-height:1;">44px</div>
+        <div style="font-size:0.8rem;font-weight:600;margin:0.3rem 0 0.15rem;">Touch Target Mínimo</div>
+        <div style="font-size:0.72rem;color:var(--muted);">Guideline Apple/Google para dedos em movimento</div>
+      </div>
+
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:1.25rem;">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:1.8rem;font-weight:700;color:var(--red);line-height:1;">R$ 0</div>
+        <div style="font-size:0.8rem;font-weight:600;margin:0.3rem 0 0.15rem;">Custo Inicial/mês</div>
+        <div style="font-size:0.72rem;color:var(--muted);">Vercel + Supabase + Pusher Sandbox gratuitos</div>
+      </div>
+
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:1.25rem;">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:1.8rem;font-weight:700;color:var(--amber);line-height:1;">3 roles</div>
+        <div style="font-size:0.8rem;font-weight:600;margin:0.3rem 0 0.15rem;">Perfis de Acesso</div>
+        <div style="font-size:0.72rem;color:var(--muted);">garçom · cozinha · admin com RLS no Supabase</div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ══ TAB: PATTERNS ══ -->
+<div id="tab-patterns" class="tab-content">
+  <div class="section">
+    <div class="section-label">Design Patterns</div>
+    <div class="section-title">3 Padrões para 3 Problemas</div>
+    <div class="section-sub">Cada pattern resolve um problema específico do domínio de restaurante</div>
+
+    <div class="patterns-grid">
+
+      <!-- FACTORY -->
+      <div class="pattern-card">
+        <div class="pattern-header">
+          <span class="pattern-badge" style="background:rgba(245,166,35,0.15);color:var(--amber);">FACTORY</span>
+          <div class="pattern-name">PedidoFactory</div>
+        </div>
+        <div class="pattern-problem">
+          <strong style="color:var(--text);">Problema:</strong> Marmita e PF têm regras de preço completamente diferentes. Espalhar esse if/else nos componentes React seria um desastre de manutenção.
+          <br><br>
+          <strong style="color:var(--text);">Solução:</strong> A Factory centraliza a criação. O componente não sabe como o preço é calculado — ele só chama <code style="color:var(--amber);font-family:'JetBrains Mono',monospace;font-size:0.75em">PedidoFactory.criar()</code>.
+        </div>
+        <div class="code-block"><span class="code-comment">// domain/PedidoFactory.ts</span>
+<span class="code-keyword">export class</span> <span class="code-class">PedidoFactory</span> {
+  <span class="code-keyword">static</span> <span class="code-method">criar</span>(tipo: TipoPedido, dados: PedidoInput) {
+    <span class="code-keyword">switch</span> (tipo) {
+      <span class="code-keyword">case</span> <span class="code-string">'MARMITA'</span>:
+        <span class="code-keyword">return new</span> <span class="code-class">Marmita</span>(dados)
+        <span class="code-comment">// 1 carne = R$18 | 2 carnes = R$20</span>
+
+      <span class="code-keyword">case</span> <span class="code-string">'PF'</span>:
+        <span class="code-keyword">return new</span> <span class="code-class">PratoFeito</span>(dados)
+        <span class="code-comment">// 2 carnes OU 1 carne dobrada</span>
+
+      <span class="code-keyword">default</span>:
+        <span class="code-keyword">throw new</span> Error(<span class="code-string">'Tipo inválido'</span>)
+    }
+  }
+}
+
+<span class="code-comment">// No API Route — limpo, sem if/else:</span>
+<span class="code-keyword">const</span> pedido = <span class="code-class">PedidoFactory</span>.<span class="code-method">criar</span>(body.tipo, body)
+<span class="code-keyword">await</span> prisma.order.<span class="code-method">create</span>({ data: pedido.<span class="code-method">toDatabase</span>() })</div>
+
+        <div class="pattern-section">
+          <div class="pattern-section-label">Onde vive no projeto</div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:0.63rem;color:var(--muted);line-height:2;">
+            src/domain/<span style="color:var(--amber)">PedidoFactory.ts</span><br>
+            src/domain/<span style="color:var(--amber)">Marmita.ts</span><br>
+            src/domain/<span style="color:var(--amber)">PratoFeito.ts</span><br>
+            src/app/api/orders/<span style="color:var(--blue)">route.ts</span> ← usa a Factory
+          </div>
+        </div>
+      </div>
+
+      <!-- BUILDER -->
+      <div class="pattern-card">
+        <div class="pattern-header">
+          <span class="pattern-badge" style="background:rgba(74,158,255,0.15);color:var(--blue);">BUILDER</span>
+          <div class="pattern-name">PedidoBuilder</div>
+        </div>
+        <div class="pattern-problem">
+          <strong style="color:var(--text);">Problema:</strong> Um pedido pode ter arroz, feijão, salada, 2 carnes diferentes, sem cebola, extra farofa... Construir esse objeto em um único new() é impossível de ler.
+          <br><br>
+          <strong style="color:var(--text);">Solução:</strong> O Builder monta o pedido passo a passo. "Completo" chama todos os métodos de uma vez. "Custom" chama só o que o garçom selecionar.
+        </div>
+        <div class="code-block"><span class="code-comment">// domain/PedidoBuilder.ts</span>
+<span class="code-keyword">export class</span> <span class="code-class">PedidoBuilder</span> {
+  <span class="code-keyword">private</span> itens: Item[] = []
+
+  <span class="code-method">setCompleto</span>() {
+    <span class="code-comment">// Adiciona todos os acompanhamentos padrão</span>
+    <span class="code-keyword">this</span>.itens = [...ACOMPANHAMENTOS_PADRAO]
+    <span class="code-keyword">return this</span>  <span class="code-comment">// chainable</span>
+  }
+
+  <span class="code-method">addCarne</span>(carne: string) {
+    <span class="code-keyword">this</span>.itens.<span class="code-method">push</span>({ tipo: <span class="code-string">'CARNE'</span>, nome: carne })
+    <span class="code-keyword">return this</span>
+  }
+
+  <span class="code-method">addAcompanhamento</span>(item: string) {
+    <span class="code-keyword">this</span>.itens.<span class="code-method">push</span>({ tipo: <span class="code-string">'ACOMP'</span>, nome: item })
+    <span class="code-keyword">return this</span>
+  }
+
+  <span class="code-method">build</span>(): PedidoItems {
+    <span class="code-keyword">return</span> { itens: <span class="code-keyword">this</span>.itens }
+  }
+}
+
+<span class="code-comment">// Uso: garçom clica "Completo"</span>
+<span class="code-keyword">const</span> itens = <span class="code-keyword">new</span> <span class="code-class">PedidoBuilder</span>()
+  .<span class="code-method">setCompleto</span>()
+  .<span class="code-method">addCarne</span>(<span class="code-string">'Frango Grelhado'</span>)
+  .<span class="code-method">build</span>()</div>
+
+        <div class="pattern-section">
+          <div class="pattern-section-label">Onde vive no projeto</div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:0.63rem;color:var(--muted);line-height:2;">
+            src/domain/<span style="color:var(--amber)">PedidoBuilder.ts</span><br>
+            src/domain/<span style="color:var(--amber)">acompanhamentos.ts</span> ← PADRAO<br>
+            src/components/<span style="color:var(--blue)">PedidoForm.tsx</span> ← usa Builder
+          </div>
+        </div>
+      </div>
+
+      <!-- OBSERVER -->
+      <div class="pattern-card">
+        <div class="pattern-header">
+          <span class="pattern-badge" style="background:rgba(232,69,69,0.15);color:var(--red);">OBSERVER</span>
+          <div class="pattern-name">Pusher Channels</div>
+        </div>
+        <div class="pattern-problem">
+          <strong style="color:var(--text);">Problema:</strong> A cozinha precisa ver o pedido imediatamente sem dar F5. Polling a cada N segundos desperdiça recursos e adiciona latência desnecessária.
+          <br><br>
+          <strong style="color:var(--text);">Solução:</strong> A cozinha se inscreve no canal Pusher (Observer passivo). Quando um pedido é salvo, a API dispara o evento. A cozinha é notificada em < 500ms.
+        </div>
+        <div class="code-block"><span class="code-comment">// app/api/orders/route.ts — Sujeito</span>
+<span class="code-keyword">export async function</span> <span class="code-method">POST</span>(req: Request) {
+  <span class="code-keyword">const</span> pedido = <span class="code-keyword">await</span> prisma.order.<span class="code-method">create</span>({...})
+
+  <span class="code-comment">// Dispara evento para todos os Observers</span>
+  <span class="code-keyword">await</span> pusher.<span class="code-method">trigger</span>(
+    <span class="code-string">'kitchen-channel'</span>,   <span class="code-comment">// canal</span>
+    <span class="code-string">'new-order'</span>,          <span class="code-comment">// evento</span>
+    { pedido }             <span class="code-comment">// payload</span>
+  )
+  <span class="code-keyword">return</span> NextResponse.<span class="code-method">json</span>({ pedido })
+}
+
+<span class="code-comment">// app/dashboard/page.tsx — Observer</span>
+<span class="code-keyword">const</span> channel = pusher.<span class="code-method">subscribe</span>(<span class="code-string">'kitchen-channel'</span>)
+channel.<span class="code-method">bind</span>(<span class="code-string">'new-order'</span>, (data) => {
+  <span class="code-method">setPedidos</span>(prev => [data.pedido, ...prev])
+  <span class="code-method">playAlertSound</span>() <span class="code-comment">// 🔔</span>
+})</div>
+
+        <div class="pattern-section">
+          <div class="pattern-section-label">Onde vive no projeto</div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:0.63rem;color:var(--muted);line-height:2;">
+            src/lib/<span style="color:var(--amber)">pusher.ts</span> ← server client<br>
+            src/lib/<span style="color:var(--amber)">pusherClient.ts</span> ← browser client<br>
+            src/app/dashboard/<span style="color:var(--blue)">page.tsx</span> ← Observer
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ══ TAB: DATABASE ══ -->
+<div id="tab-database" class="tab-content">
+  <div class="section">
+    <div class="section-label">Prisma Schema · PostgreSQL</div>
+    <div class="section-title">Modelo de Dados</div>
+    <div class="section-sub">4 tabelas principais. Clique nos campos para ver detalhes</div>
+
+    <div class="db-grid">
+
+      <div class="db-table">
+        <div class="db-table-header">
+          <span style="font-size:1.1rem">📋</span>
+          <div class="db-table-name">orders</div>
+        </div>
+        <div class="db-table-body">
+          <div class="db-field"><span class="db-field-pk">PK</span><span class="db-field-name">id</span><span class="db-field-type">uuid</span></div>
+          <div class="db-field"><span class="db-field-fk">FK</span><span class="db-field-name">waiter_id</span><span class="db-field-type">uuid</span></div>
+          <div class="db-field"><span style="width:24px"></span><span class="db-field-name">type</span><span class="db-field-type">enum</span></div>
+          <div class="db-field"><span style="width:24px"></span><span class="db-field-name">status</span><span class="db-field-type">enum</span></div>
+          <div class="db-field"><span style="width:24px"></span><span class="db-field-name">total_price</span><span class="db-field-type">decimal</span></div>
+          <div class="db-field"><span style="width:24px"></span><span class="db-field-name">table_number</span><span class="db-field-type">int</span></div>
+          <div class="db-field"><span style="width:24px"></span><span class="db-field-name">notes</span><span class="db-field-type">text?</span></div>
+          <div class="db-field"><span style="width:24px"></span><span class="db-field-name">created_at</span><span class="db-field-type">timestamp</span></div>
+          <div class="db-field"><span style="width:24px"></span><span class="db-field-name">delivered_at</span><span class="db-field-type">timestamp?</span></div>
+        </div>
+      </div>
+
+      <div class="db-table">
+        <div class="db-table-header">
+          <span style="font-size:1.1rem">🥗</span>
+          <div class="db-table-name">order_items</div>
+        </div>
+        <div class="db-table-body">
+          <div class="db-field"><span class="db-field-pk">PK</span><span class="db-field-name">id</span><span class="db-field-type">uuid</span></div>
+          <div class="db-field"><span class="db-field-fk">FK</span><span class="db-field-name">order_id</span><span class="db-field-type">uuid</span></div>
+          <div class="db-field"><span class="db-field-fk">FK</span><span class="db-field-name">product_id</span><span class="db-field-type">uuid</span></div>
+          <div class="db-field"><span style="width:24px"></span><span class="db-field-name">item_type</span><span class="db-field-type">enum</span></div>
+          <div class="db-field"><span style="width:24px"></span><span class="db-field-name">quantity</span><span class="db-field-type">int</span></div>
+          <div class="db-field"><span style="width:24px"></span><span class="db-field-name">is_doubled</span><span class="db-field-type">bool</span></div>
+          <div class="db-field"><span style="width:24px"></span><span class="db-field-name">notes</span><span class="db-field-type">text?</span></div>
+        </div>
+      </div>
+
+      <div class="db-table">
+        <div class="db-table-header">
+          <span style="font-size:1.1rem">🍕</span>
+          <div class="db-table-name">products</div>
+        </div>
+        <div class="db-table-body">
+          <div class="db-field"><span class="db-field-pk">PK</span><span class="db-field-name">id</span><span class="db-field-type">uuid</span></div>
+          <div class="db-field"><span style="width:24px"></span><span class="db-field-name">name</span><span class="db-field-type">text</span></div>
+          <div class="db-field"><span style="width:24px"></span><span class="db-field-name">category</span><span class="db-field-type">enum</span></div>
+          <div class="db-field"><span style="width:24px"></span><span class="db-field-name">available</span><span class="db-field-type">bool</span></div>
+          <div class="db-field"><span style="width:24px"></span><span class="db-field-name">is_protein</span><span class="db-field-type">bool</span></div>
+        </div>
+      </div>
+
+      <div class="db-table">
+        <div class="db-table-header">
+          <span style="font-size:1.1rem">👤</span>
+          <div class="db-table-name">profiles</div>
+        </div>
+        <div class="db-table-body">
+          <div class="db-field"><span class="db-field-pk">PK</span><span class="db-field-name">id</span><span class="db-field-type">uuid</span></div>
+          <div class="db-field"><span style="width:24px"></span><span class="db-field-name">name</span><span class="db-field-type">text</span></div>
+          <div class="db-field"><span style="width:24px"></span><span class="db-field-name">role</span><span class="db-field-type">enum</span></div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="db-relation">
+      <div style="margin-bottom:0.3rem;color:var(--amber);font-size:0.6rem;letter-spacing:0.1em;">ENUMS</div>
+      <span style="color:var(--text)">OrderType:</span> <span>MARMITA | PF</span><br>
+      <span style="color:var(--text)">OrderStatus:</span> <span>PENDING → PREPARING → READY → DELIVERED | CANCELLED</span><br>
+      <span style="color:var(--text)">ItemType:</span> <span>PROTEIN | CARB | SALAD | SIDE</span><br>
+      <span style="color:var(--text)">ProductCategory:</span> <span>PROTEIN | CARB | SALAD | SIDE | DRINK</span><br>
+      <span style="color:var(--text)">Role:</span> <span>WAITER | KITCHEN | ADMIN</span>
+    </div>
+
+    <div style="margin-top:1.25rem;">
+      <div class="section-label" style="margin-bottom:0.75rem;">Prisma Schema Completo</div>
+      <div class="code-block"><span class="code-comment">// prisma/schema.prisma</span>
+
+<span class="code-keyword">enum</span> <span class="code-class">OrderType</span>   { MARMITA PF }
+<span class="code-keyword">enum</span> <span class="code-class">OrderStatus</span> { PENDING PREPARING READY DELIVERED CANCELLED }
+<span class="code-keyword">enum</span> <span class="code-class">Role</span>        { WAITER KITCHEN ADMIN }
+
+<span class="code-keyword">model</span> <span class="code-class">Order</span> {
+  id          String      @id @default(uuid())
+  waiterId    String
+  waiter      Profile     @relation(fields: [waiterId], references: [id])
+  type        OrderType
+  status      OrderStatus @default(PENDING)
+  totalPrice  Decimal     @db.Decimal(8, 2)
+  tableNumber Int
+  notes       String?
+  items       OrderItem[]
+  createdAt   DateTime    @default(now())
+  deliveredAt DateTime?
+}
+
+<span class="code-keyword">model</span> <span class="code-class">OrderItem</span> {
+  id         String   @id @default(uuid())
+  orderId    String
+  order      Order    @relation(fields: [orderId], references: [id])
+  productId  String
+  product    Product  @relation(fields: [productId], references: [id])
+  quantity   Int      @default(1)
+  isDoubled  Boolean  @default(false)  <span class="code-comment">// PF carne dobrada</span>
+  notes      String?
+}</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ TAB: PREÇOS ══ -->
+<div id="tab-precos" class="tab-content">
+  <div class="section">
+    <div class="section-label">Regras de Negócio · PedidoFactory</div>
+    <div class="section-title">Lógica de Precificação</div>
+    <div class="section-sub">Implementada dentro das classes de domínio, não nos componentes React</div>
+
+    <div class="price-grid">
+
+      <div class="price-card">
+        <div class="price-card-header">
+          <div class="price-icon">🍱</div>
+          <div>
+            <div class="price-card-name">Marmita</div>
+            <div style="font-family:'JetBrains Mono',monospace;font-size:0.6rem;color:var(--muted);">class Marmita extends Pedido</div>
+          </div>
+        </div>
+        <div class="price-card-body">
+          <div class="price-row"><span class="price-option">1 carne</span><span class="price-value">R$ 18,00</span></div>
+          <div class="price-row"><span class="price-option">2 carnes</span><span class="price-value">R$ 20,00</span></div>
+          <div class="price-row"><span class="price-option">Acompanhamentos</span><span class="price-value">incluso</span></div>
+          <div class="price-rule">⚡ Proteína extra: +R$ 2,00 automático via Factory</div>
+        </div>
+      </div>
+
+      <div class="price-card">
+        <div class="price-card-header">
+          <div class="price-icon">🍽️</div>
+          <div>
+            <div class="price-card-name">Prato Feito (PF)</div>
+            <div style="font-family:'JetBrains Mono',monospace;font-size:0.6rem;color:var(--muted);">class PratoFeito extends Pedido</div>
+          </div>
+        </div>
+        <div class="price-card-body">
+          <div class="price-row"><span class="price-option">Padrão (2 carnes)</span><span class="price-value">Preço fixo</span></div>
+          <div class="price-row"><span class="price-option">1 carne dobrada</span><span class="price-value">Mesmo preço</span></div>
+          <div class="price-row"><span class="price-option">isDoubled no item</span><span class="price-value">bool = true</span></div>
+          <div class="price-rule">⚡ <code style="font-family:'JetBrains Mono',monospace">isDoubled=true</code> salvo no OrderItem para a cozinha saber</div>
+        </div>
+      </div>
+
+    </div>
+
+    <div style="margin-top:1.25rem;">
+      <div class="section-label" style="margin-bottom:0.75rem;">Implementação das Classes de Domínio</div>
+      <div class="code-block"><span class="code-comment">// domain/Marmita.ts</span>
+<span class="code-keyword">export class</span> <span class="code-class">Marmita</span> {
+  <span class="code-keyword">private</span> proteinas: string[] = []
+  <span class="code-keyword">private</span> acompanhamentos: string[] = []
+
+  <span class="code-keyword">constructor</span>(<span class="code-keyword">private</span> data: MarmitaInput) {}
+
+  <span class="code-method">calcularPreco</span>(): number {
+    <span class="code-keyword">const</span> qtdProteinas = <span class="code-keyword">this</span>.proteinas.length
+    <span class="code-keyword">if</span> (qtdProteinas === <span class="code-num">1</span>) <span class="code-keyword">return</span> <span class="code-num">18.00</span>
+    <span class="code-keyword">if</span> (qtdProteinas === <span class="code-num">2</span>) <span class="code-keyword">return</span> <span class="code-num">20.00</span>
+    <span class="code-keyword">throw new</span> Error(<span class="code-string">'Marmita: 1 ou 2 carnes apenas'</span>)
+  }
+
+  <span class="code-method">toDatabase</span>() {
+    <span class="code-keyword">return</span> {
+      type: <span class="code-string">'MARMITA'</span>,
+      totalPrice: <span class="code-keyword">this</span>.<span class="code-method">calcularPreco</span>(),
+      items: [...<span class="code-keyword">this</span>.proteinas, ...<span class="code-keyword">this</span>.acompanhamentos]
+    }
+  }
+}
+
+<span class="code-comment">// domain/PratoFeito.ts</span>
+<span class="code-keyword">export class</span> <span class="code-class">PratoFeito</span> {
+  <span class="code-method">calcularPreco</span>(): number {
+    <span class="code-keyword">return</span> <span class="code-keyword">this</span>.data.precoFixo ?? <span class="code-num">25.00</span>
+  }
+
+  <span class="code-method">getProteina</span>() {
+    <span class="code-comment">// 2 carnes normais OU 1 dobrada (isDoubled)</span>
+    <span class="code-keyword">if</span> (<span class="code-keyword">this</span>.data.carneDobrada) {
+      <span class="code-keyword">return</span> [{ nome: <span class="code-keyword">this</span>.data.carne, isDoubled: <span class="code-keyword">true</span> }]
+    }
+    <span class="code-keyword">return</span> <span class="code-keyword">this</span>.data.carnes.<span class="code-method">map</span>(c => ({ nome: c, isDoubled: <span class="code-keyword">false</span> }))
+  }
+}</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ TAB: ROADMAP ══ -->
+<div id="tab-roadmap" class="tab-content">
+
+  <div class="global-progress">
+    <div class="global-label" id="g-label">0 de 0 tarefas — 0%</div>
+    <div class="gpbar"><div class="gpbar-fill" id="g-bar" style="width:0%"></div></div>
+  </div>
+
+  <div style="padding: 1rem 2rem 0;">
+    <div class="callout">
+      <strong>📌 Baseado no seu documento.</strong> Sprints refinados com a lógica dos Design Patterns integrada. Marque as tarefas conforme avançar — o progresso é salvo nesta sessão.
+    </div>
+  </div>
+
+  <div class="roadmap-root" id="roadmap-root"></div>
+</div>
+
+<script src="js/script.js"></script>
+</body>
+</html>
